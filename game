@@ -1,0 +1,256 @@
+//Bitmojis
+//Ethan's Bitmoji
+var drawTorso = function(torsoX,torsoY,torsoHeight) {
+    
+    //shirt
+    noStroke();
+    fill(110, 110, 110);
+    quad(torsoX+(torsoHeight/100*185), torsoY+(torsoHeight/100*210), torsoX+(torsoHeight/100     *215), torsoY+(torsoHeight/100*210), torsoX+(torsoHeight/100*265), torsoY+(torsoHeight      /100*220), torsoX+(torsoHeight/100*135), torsoY+(torsoHeight/100*220));
+    quad(torsoX+(torsoHeight/100*265), torsoY+(torsoHeight/100*220), torsoX+(torsoHeight/100     *135), (torsoY+(torsoHeight/100*220)), torsoX+(torsoHeight/100*125), torsoY+(torsoHeight/100*256), torsoX+(torsoHeight/100*275),torsoY+(torsoHeight/100*256));
+  
+    //name on shirt
+    fill(0, 0, 0);
+    stroke(0, 0, 0);
+    textSize(torsoHeight/100*30);
+    text("ES",torsoX+(torsoHeight/100*180),torsoY+(torsoHeight/100*220));
+    
+};
+
+var drawHeadphones = function(headphonesX,headphonesY,headphonesHeight) {
+
+    //headphone band
+    noFill();
+    stroke(0);
+    strokeWeight(6);
+    arc(headphonesX+(headphonesHeight/100*200), headphonesY+(headphonesHeight/100*140),         headphonesHeight/100*80, headphonesHeight/100*60, 180, 360);
+
+    //headphone ears
+    fill(0, 0, 0);
+    ellipse(headphonesX+(headphonesHeight/100*160), headphonesY+(headphonesHeight/100*150),     headphonesHeight/100*10, headphonesHeight/100*25); //left ear
+    ellipse(headphonesX+headphonesHeight/100*240, headphonesY+headphonesHeight/100*150,         headphonesHeight/100*10, headphonesHeight/100*25); //right ear
+
+};
+
+var drawHead = function(headX,headY,headHeight) {
+
+    //head
+    fill(255, 224, 189);
+    ellipse(headX+(headHeight/100*200),headY+(headHeight/100*160),headHeight/100*80,headHeight/100*80); 
+    //face
+    quad(headX+(headHeight/100*185),headY+(headHeight/100*210),headX+(headHeight/100*190        ),headY+(headHeight/100*195),headX+(headHeight/100*210),headY+(headHeight/100*195),headX     +(headHeight/100*215),headY+(headHeight/100*210));        
+    //neck
+    fill(255, 224, 189);
+    ellipse(headX+(headHeight/100*200), headY+(headHeight/100*132), headHeight/100*60,            headHeight/100*8); //hairline
+
+    //hair
+    fill(94, 65, 42);
+    triangle(headX+(headHeight/100*160), headY+(headHeight/100*125), headX+(headHeight/100      *160), headY+(headHeight/100*165), headX+(headHeight/100*170), headY+(headHeight/100*130     )); 
+    //hair left
+    triangle(headX+(headHeight/100*240), headY+(headHeight/100*125), headX+(headHeight/100      *240), headY+(headHeight/100*165), headX+(headHeight/100*230), headY+(headHeight/100*130     )); //hair right
+    ellipse(headX+(headHeight/100*200), headY+(headHeight/100*125), headHeight/100*78,          headHeight/100*20); //hair top
+
+};
+
+var drawFace = function(faceX,faceY,faceHeight)  {
+    
+    //eyes
+    noStroke();
+    fill(255, 255, 255);
+    ellipse(faceX+(faceHeight/100*185), faceY+(faceHeight/100*150), faceHeight/100*12,          faceHeight/100*8); //left eye
+    ellipse(faceX+(faceHeight/100*215), faceY+(faceHeight/100*150), faceHeight/100*12,          faceHeight/100*8); //right eye
+    fill(20, 138, 255);
+    ellipse(faceX+(faceHeight/100*185), faceY+(faceHeight/100*150), faceHeight/100*7,           faceHeight/100*7); //left iris
+    ellipse(faceX+(faceHeight/100*215), faceY+(faceHeight/100*150), faceHeight/100*7,           faceHeight/100*7); //right iris
+    fill(0, 0, 0);
+    ellipse(faceX+(faceHeight/100*185), faceY+(faceHeight/100*150), faceHeight/100*3,           faceHeight/100*3); //left pupil
+    ellipse(faceX+(faceHeight/100*215), faceY+(faceHeight/100*150), faceHeight/100*3,           faceHeight/100*3); //right pupil
+    
+    //nose
+    stroke(0,0,0);
+    strokeWeight(2);
+    line(faceX+(faceHeight/100*199),faceY+(faceHeight/100*155),faceX+(faceHeight/100*206        ),faceY+(faceHeight/100*170));
+    noFill();
+    stroke(0);
+    strokeWeight(2);
+    arc(faceX+(faceHeight/100*203), faceY+(faceHeight/100*170), faceHeight/100*6, faceHeight     /100*1, 10, 180); 
+
+    //mouth
+    strokeWeight(2);
+    arc(faceX+(faceHeight/100*200), faceY+(faceHeight/100*188), faceHeight/100*15, faceHeight/100*3, 10, 180); //bottom mouth
+    line(faceX+(faceHeight/100*192), faceY+(faceHeight/100*187), faceX+(faceHeight/100*208),     faceY+(faceHeight/100*187)); //top mouth
+    stroke(255, 255, 255);
+    line(faceX+(faceHeight/100*194), faceY+(faceHeight/100*188), faceX+(faceHeight/100*206), faceY+(faceHeight/100*188)); //teeth
+    
+};
+
+var drawBitmoji = function(x,y,height) {
+
+drawTorso(x,y,height); 
+noStroke();
+drawHead(x,y,height);
+drawHeadphones(x,y,height);
+drawFace(x,y,height);
+
+};
+
+//Judd's Bitmoji
+var drawTorsoSkinTone = function(bitmojiX,bitmojiY,bitmojiH)
+{
+    var height = bitmojiH/355;
+stroke(0, 0, 0);
+fill(140, 91, 13);
+ellipse(bitmojiX+157*height,bitmojiY+261*height,109*height,-36*height); //Hoodie
+fill(89, 49, 3);
+ellipse(bitmojiX+157*height,bitmojiY+261*height,78*height,-36*height); //Hoodie
+//Neck
+fill(189,150,51);
+rect(bitmojiX+142*height,bitmojiY+245*height,27*height,27*height,10*height);
+//Skintone
+fill(189, 150, 51);
+ellipse(bitmojiX+156*height,bitmojiY+199*height,98*height,121*height);
+//Jacket
+fill(140, 91, 13);
+quad(bitmojiX+229*height,bitmojiY+355*height,bitmojiX+86*height,bitmojiY+355*height,bitmojiX+104*height,bitmojiY+267*height,bitmojiX+211*height,bitmojiY+267*height);
+
+arc(bitmojiX+157*height,bitmojiY+268*height,34*height,14*height,0,180);
+};
+var drawHairHead = function(bitmojiX,bitmojiY,bitmojiH) //Head & Hair
+{
+      var height = bitmojiH/355;
+      stroke(0, 0, 0);
+fill(0, 0, 0);
+ellipse(bitmojiX+143*height,bitmojiY+152*height,69*height,18*height);
+ellipse(bitmojiX+143*height,bitmojiY+126*height,69*height,18*height);
+ellipse(bitmojiX+181*height,bitmojiY+138*height,69*height,18*height);
+ellipse(bitmojiX+195*height,bitmojiY+160*height,51*height,19*height);
+ellipse(bitmojiX+173*height,bitmojiY+126*height,51*height,19*height);
+ellipse(bitmojiX+119*height,bitmojiY+160*height,69*height,18*height);
+ellipse(bitmojiX+133*height,bitmojiY+135*height,69*height,18*height);
+ellipse(bitmojiX+126*height,bitmojiY+146*height,69*height,18*height);
+arc(bitmojiX+157*height,bitmojiY+154*height,126*height,65*height,-192,14);
+
+//Eyes&Eyebrows
+ellipse(bitmojiX+136*height,bitmojiY+190*height,9*height,17*height);
+ellipse(bitmojiX+176*height,bitmojiY+190*height,9*height,17*height);
+ellipse(bitmojiX+176*height,bitmojiY+172*height,21*height,4*height);
+ellipse(bitmojiX+135*height,bitmojiY+172*height,21*height,4*height);
+//Sideburns
+triangle(bitmojiX+108*height,bitmojiY+216*height,bitmojiX+117*height,bitmojiY+166*height,bitmojiX+100*height,bitmojiY+145*height);
+triangle(bitmojiX+204*height,bitmojiY+219*height,bitmojiX+217*height,bitmojiY+160*height,bitmojiX+194*height,bitmojiY+146*height);
+};
+var drawMouthEtc = function(bitmojiX,bitmojiY,bitmojiH)
+{
+      var height = bitmojiH/355;
+      stroke(0, 0, 0);
+//Glasses
+noFill();
+rect(bitmojiX+122*height,bitmojiY+178*height,28*height,23*height,10*height);
+rect(bitmojiX+162*height,bitmojiY+178*height,28*height,23*height,10*height);
+line(bitmojiX+150*height,bitmojiY+190*height,bitmojiX+161*height,bitmojiY+190*height);
+line(bitmojiX+113*height,bitmojiY+190*height,bitmojiX+123*height,bitmojiY+190*height);
+line(bitmojiX+202*height,bitmojiY+190*height,bitmojiX+190*height,bitmojiY+190*height);
+//Mole
+fill(0, 0, 0);
+ellipse(bitmojiX+142*height,bitmojiY+220*height,3*height,3*height);
+
+//Moustache&Mouth
+fill(0, 0, 0);
+arc(bitmojiX+145*height,bitmojiY+228*height,20*height,9*height,180,360);
+arc(bitmojiX+166*height,bitmojiY+228*height,20*height,9*height,180,360);
+noFill();
+arc(bitmojiX+156*height,bitmojiY+181*height,76*height,121*height,63,117);
+//Initials
+fill(59, 219, 81);
+rect(bitmojiX+139*height,bitmojiY+291*height,5*height,25*height,100*height);
+arc(bitmojiX+133*height,bitmojiY+314*height,22*height,13*height,0,218);
+rect(bitmojiX+166*height,bitmojiY+291*height,5*height,25*height,100*height);
+rect(bitmojiX+166*height,bitmojiY+314*height,23*height,7*height,128*height);
+
+};
+var drawMyBitmoji = function(bitmojiX,bitmojiY,bitmojiH) {
+    stroke(0, 0, 0);
+    drawTorsoSkinTone(bitmojiX,bitmojiY,bitmojiH);
+    drawHairHead(bitmojiX,bitmojiY,bitmojiH);
+    drawMouthEtc(bitmojiX,bitmojiY,bitmojiH);
+};
+
+var currentScene = 0;
+var score = 0;
+var startTime;
+var stillPlaying = true;
+//Copy in the Khan Button Class
+
+var Button = function(config) {
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.width = config.width || 98;
+    this.height = config.height || 50;
+    this.label = config.label || "Click";
+    this.onClick = config.onClick || function() {};
+};
+
+Button.prototype.draw = function() {
+    fill(52, 96, 217);
+    rect(this.x, this.y, this.width, this.height, 110);
+    fill(0, 0, 0);
+    textSize(21);
+    textAlign(LEFT,TOP);
+    text(this.label, this.x + 10, this.y + this.height/4);
+};
+
+Button.prototype.isMouseInside = function() {
+    return mouseX > this.x &&
+           mouseX < (this.x + this.width) &&
+           mouseY > this.y &&
+           mouseY < (this.y + this.height);
+};
+
+Button.prototype.handleMouseClick = function() {
+    if (this.isMouseInside()) {
+        this.onClick();
+    }
+};
+
+//Creates a button
+var startButton = new Button ({
+    x: 144,
+    y: 195,
+    label: "Start!",
+    onClick: function() {
+       if(currentScene === 0){
+       currentScene = 1;
+       this.label = "Pause";
+    }
+    else if (currentScene === 1){
+    currentScene = 0;
+    this.label = "Start"; 
+         }
+    }
+});
+
+var splashScreen = function(){
+        
+    background(68,0,139);
+    fill(51, 29, 242);
+    textSize(42);
+    text("Brick Breakers", 63, 51);
+    fill(239, 255, 186);
+    textSize(21);
+    text("By Ethan & Judd", 217, 86);
+    textSize(14);
+    fill(252, 235, 3);
+   // text("", 19, 113);
+    textSize(28);
+    fill(255, 230, 0);
+    startButton.draw();
+    drawBitmoji(119,36,100);
+    drawMyBitmoji(-13,65,230);
+};
+
+var playGame = function() {
+    if (stillPlaying) {
+  
+}
+};
+
+splashScreen(); //Displays the Splashscreen
