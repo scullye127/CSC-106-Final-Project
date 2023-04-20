@@ -174,6 +174,8 @@ var drawMyBitmoji = function(bitmojiX,bitmojiY,bitmojiH) {
     drawMouthEtc(bitmojiX,bitmojiY,bitmojiH);
 };
 
+
+// Global config
 var currentScene = 0;
 var score = 0;
 var startTime;
@@ -183,17 +185,17 @@ var stillPlaying = true;
 var Button = function(config) {
     this.x = config.x || 0;
     this.y = config.y || 0;
-    this.width = config.width || 98;
+    this.width = config.width || 150;
     this.height = config.height || 50;
     this.label = config.label || "Click";
     this.onClick = config.onClick || function() {};
 };
 
 Button.prototype.draw = function() {
-    fill(52, 96, 217);
+    fill(52, 217, 148);
     rect(this.x, this.y, this.width, this.height, 110);
     fill(0, 0, 0);
-    textSize(21);
+    textSize(20);
     textAlign(LEFT,TOP);
     text(this.label, this.x + 10, this.y + this.height/4);
 };
@@ -213,8 +215,8 @@ Button.prototype.handleMouseClick = function() {
 
 //Creates a button
 var startButton = new Button ({
-    x: 144,
-    y: 195,
+    x: 246,
+    y: 343,
     label: "Start!",
     onClick: function() {
        if(currentScene === 0){
@@ -227,19 +229,35 @@ var startButton = new Button ({
          }
     }
 });
+/*Define Mouseclicked built-in function
+Have it check to see if the mouse was clicked on the character to be mashed by checking relative coordinates of the mouseX and mouseY to the character's X and Y coordinates.
+Also, if the mouse was clicked on the character, the score will increase in increments and the new score will show up as text on the screen*/
+
+mouseClicked = function() {
+    startButton.handleMouseClick();
+};
 
 var splashScreen = function(){
-        
     background(68,0,139);
-    fill(51, 29, 242);
+    fill(128, 116, 237);
     textSize(42);
-    text("Brick Breakers", 63, 51);
+    text("Brick Breakers", 63, 34);
     fill(239, 255, 186);
     textSize(21);
     text("By Ethan & Judd", 217, 86);
     textSize(14);
     fill(252, 235, 3);
-   // text("", 19, 113);
+   /*image(getImage("cute/Star"), 164, 247, 42, 76);
+   image(getImage("cute/Star"), 102, 322, 42, 76);
+   image(getImage("cute/Star"), 195, 316, 42, 76);
+   image(getImage("cute/Star"), 90, 138, 42, 76);
+   image(getImage("cute/Star"), 347, 88, 42, 76);
+   image(getImage("cute/Star"), 9, -13, 42, 76);
+   image(getImage("cute/Star"), 218, 88, 42, 76);
+   image(getImage("cute/Star"), 120, 62, 42, 76);
+   image(getImage("cute/Star"), 9, 323, 42, 76);
+   image(getImage("cute/Star"), 156, 130, 42, 76);
+   text("", 19, 113);*/
     textSize(28);
     fill(255, 230, 0);
     startButton.draw();
@@ -247,10 +265,21 @@ var splashScreen = function(){
     drawMyBitmoji(-13,65,230);
 };
 
-var playGame = function() {
-    if (stillPlaying) {
-  
-}
+var playGame = function(){
+    background(36, 10, 122);
+    fill(128, 116, 237);
+    startButton.draw();
+   
 };
 
-splashScreen(); //Displays the Splashscreen
+/* Define all the draw function
+If the current scene is 0, call the splash screen and if it is 1, then it would go to the next scene, which is the play game scene, then call the game functions and else call the endScreen function*/
+var draw = function() {
+    if (currentScene === 0) {
+        splashScreen();
+    }
+    else if (currentScene === 1){
+        playGame();
+    }
+};    
+
