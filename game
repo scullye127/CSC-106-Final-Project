@@ -229,10 +229,7 @@ var startButton = new Button ({
          }
     }
 });
-/*Define Mouseclicked built-in function
-Have it check to see if the mouse was clicked on the character to be mashed by checking relative coordinates of the mouseX and mouseY to the character's X and Y coordinates.
-Also, if the mouse was clicked on the character, the score will increase in increments and the new score will show up as text on the screen*/
-
+/*Define Mouseclicked built-in function*/
 mouseClicked = function() {
     startButton.handleMouseClick();
 };
