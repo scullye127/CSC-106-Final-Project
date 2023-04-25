@@ -225,7 +225,7 @@ var startButton = new Button ({
     }
     else if (currentScene === 1){
     currentScene = 0;
-    this.label = "Start"; 
+    this.label = "Resume"; 
          }
     }
 });
@@ -244,17 +244,6 @@ var splashScreen = function(){
     text("By Ethan & Judd", 217, 86);
     textSize(14);
     fill(252, 235, 3);
-   /*image(getImage("cute/Star"), 164, 247, 42, 76);
-   image(getImage("cute/Star"), 102, 322, 42, 76);
-   image(getImage("cute/Star"), 195, 316, 42, 76);
-   image(getImage("cute/Star"), 90, 138, 42, 76);
-   image(getImage("cute/Star"), 347, 88, 42, 76);
-   image(getImage("cute/Star"), 9, -13, 42, 76);
-   image(getImage("cute/Star"), 218, 88, 42, 76);
-   image(getImage("cute/Star"), 120, 62, 42, 76);
-   image(getImage("cute/Star"), 9, 323, 42, 76);
-   image(getImage("cute/Star"), 156, 130, 42, 76);
-   text("", 19, 113);*/
     textSize(28);
     fill(255, 230, 0);
     startButton.draw();
@@ -268,6 +257,7 @@ var playGame = function(){
     startButton.draw();
     
 };
+//Adapt Memory Game Tiles to work as bricks
 
 var Brick = function(x, y) {
     this.x = x;
@@ -276,8 +266,17 @@ var Brick = function(x, y) {
     this.h = 20;
 };
 
+
+//Make an array of colors for the bricks to be
+var brickColors = [];
+
+for(var i = 0; i <= 28; i++) {
+       brickColors.push(color(round(random(0,255)),(round(random(0,255))),round(random(0,255))));
+}
+
+
 Brick.prototype.draw = function() {
-    fill(255, 0, 0);
+    fill(brickColors[i]);
     strokeWeight(2);
     rect(this.x, this.y, this.w, this.h);
 };
@@ -303,8 +302,8 @@ var draw = function() {
     else if (currentScene === 1){
         playGame();
         for (var i = 0; i < bricks.length; i++) {
-    bricks[i].draw();
-}
+        bricks[i].draw();
+        }
     }
 };    
 
