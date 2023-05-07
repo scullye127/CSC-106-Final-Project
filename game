@@ -281,12 +281,25 @@ var Brick = function(x, y) {
     this.y = y;
     this.w = 54;
     this.h = 20;
+    this.isBroken = false;
 };
 
 Brick.prototype.draw = function() {
     fill(255, 0, 0);
     strokeWeight(2);
+    if(this.isBroken) {
+    rect(1000, this.y, this.w, this.h);   
+    } else {
     rect(this.x, this.y, this.w, this.h);
+    }
+};
+
+Brick.prototype.ballCollides = function(x, y) {
+  
+  return x >= this.x && x <= this.x + this.w &&
+         y >= this.y && y <= this.y + this.h;
+    
+    
 };
 
 // Create the array of tiles at appropriate positions
@@ -308,6 +321,8 @@ var stillPlaying= false;
 var t = 0;
 var time = 60;
 var ballSpeed = 3.5;
+var ballX;
+var ballY;
 
 angleMode = "degrees";
 
@@ -354,6 +369,8 @@ var Ball = function(position, speed) { //Ball Properties with Position, Speed an
             this.velocity.mult(new PVector(1, -1));
         }
         this.position.add(this.velocity);
+        ballX = this.position.x;
+        ballY = this.position.y;
     };
 };
 
@@ -387,9 +404,16 @@ var playGame = function(){
         }
         return;
     }
+    for (var i = 0; i <bricks.length; i++) {
+        if(bricks[i].ballCollides(ballX,ballY)) {
+            bricks[i].isBroken = true;
+         println(bricks[i].isBroken);
+        }
+        }
+    
     for (var i = 0; i < bricks.length; i++) {
     bricks[i].draw();
-}
+        }
   ball.update();
 };
 
