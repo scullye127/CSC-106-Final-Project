@@ -288,7 +288,7 @@ Brick.prototype.draw = function() {
     fill(255, 0, 0);
     strokeWeight(2);
     if(this.isBroken) {
-    rect(1000, this.y, this.w, this.h);   
+    rect(1000, 1000, this.w, this.h);   
     } else {
     rect(this.x, this.y, this.w, this.h);
     }
@@ -372,6 +372,16 @@ var Ball = function(position, speed) { //Ball Properties with Position, Speed an
         ballX = this.position.x;
         ballY = this.position.y;
     };
+    this.bottomCollision = function(){
+        {
+            this.velocity.mult(new PVector(1, -1));
+            
+        }
+        
+        
+    };
+    
+    
 };
 
 
@@ -407,9 +417,20 @@ var playGame = function(){
     for (var i = 0; i <bricks.length; i++) {
         if(bricks[i].ballCollides(ballX,ballY)) {
             bricks[i].isBroken = true;
-         println(bricks[i].isBroken);
         }
         }
+        
+    for (var i = 0; i <bricks.length; i++) {
+     if(bricks[i].ballCollides(ballX,ballY)){
+         println("BallY: " + ballY);
+            println("brick#: " + i);
+            println("brick broken?: " + bricks[i].isBroken);
+            ball.bottomCollision();   
+         
+     }
+        
+        
+    }
     
     for (var i = 0; i < bricks.length; i++) {
     bricks[i].draw();
