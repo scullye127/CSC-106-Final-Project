@@ -180,7 +180,6 @@ var drawMyBitmoji = function(bitmojiX,bitmojiY,bitmojiH) {
 // Global config
 var currentScene = 0;
 var score = 0;
-var startTime;
 var stillPlaying = true;
 ///////Copy in the Khan Button Class///////
 
@@ -222,19 +221,25 @@ var startButton = new Button ({
     y: 288,
     label: "Start!",
     onClick: function() {
-       if(currentScene === 0){
-       currentScene = 1;
-       this.label = "Pause";
-    }
-    else if (currentScene === 1){
-    currentScene = 0;
-    this.label = "Start"; 
-         }
+     currentScene = 1;   
     }
 });
+
+var pauseButton = new Button ({
+    x:290,
+    y: 350,
+    label: "Pause",
+    onClick: function() {
+     currentScene = 0;   
+        
+        
+    }
+});
+
 //Define Mouseclicked built-in function
 mouseClicked = function() {
     startButton.handleMouseClick();
+    pauseButton.handleMouseClick();
 };
 
 var splashScreen = function(){
@@ -385,10 +390,51 @@ var Ball = function(position, speed) { //Ball Properties with Position, Speed an
 
 ball = new Ball(new PVector(width/2, height/2));
 
+var paddleX = (175);
+var paddleSpeed = 2;
+var bricksBroken = 0;
+
 var paddle = function() { //Paddle (work in progress)
     //Constrain the player movement
     fill(255, 255, 255);
-  
+    rect(paddleX, 300, 150, 10);
+
+};
+
+//Move the paddle left / right adapted from khan pong
+var movePaddleLeft = function() {
+    paddleX -= paddleSpeed;
+};
+
+//Move the player down
+var movePaddleRight = function() {
+    paddleX += paddleSpeed;
+};
+
+//Check if 28 bricks have been destroyed, if so, player wins
+var checkwin = function() {
+    if(bricksBroken === 28) {
+        currentScene = 2;  
+    }
+    else {return;}    
+     
+};
+
+var startTime;
+var playerTime;
+
+var timerStart = function() {
+  {
+   startTime = millis;   
+  }
+    
+};
+
+var timerStop = function() {
+ {
+  playerTime = millis-startTime;   
+ }
+    
 };
 
 //GAME CODE HERE
@@ -402,8 +448,21 @@ var playGame = function(){
     background(47, 44, 89);
     //Draw the ball
     ball.draw();
+    
+    if(keyIsPressed) {
+     if (keyCode === LEFT && paddleX > 0) {
+      movePaddleLeft();   
+         
+     }
+     else if (keyCode === RIGHT && paddleX < 250) {
+      movePaddleRight();   
+     }
+        
+        
+    }
+    
     paddle();
-    startButton.draw();
+    pauseButton.draw();
     if (stillPlaying) {
         t++;
         if (t >= time) {
@@ -412,25 +471,66 @@ var playGame = function(){
         }
         return;
     }
+    
+    if ((ballX >= paddleX && ballX <= paddleX+250) && (ballY > 300 && ballY < 310)) {
+     ball.bottomCollision();   
         
+    }
+     
     for (var i = 0; i <bricks.length; i++) {
      if(bricks[i].ballCollides(ballX,ballY)){
-         println("BallY: " + ballY);
-            println("brick#: " + i);
-            println("brick broken?: " + bricks[i].isBroken);
             if(bricks[i].isBroken === false) {
                 ball.bottomCollision(); 
                 bricks[i].isBroken = true;
+                bricksBroken ++;
             }
-     }
-        
-        
+        }
     }
     
     for (var i = 0; i < bricks.length; i++) {
     bricks[i].draw();
         }
   ball.update();
+};
+
+var endScreen = function() {
+     var customFont = createFont("fantasy");
+    textFont(customFont);
+    background(68,0,139);
+    fill(86, 17, 247);
+    rect(354,-163,300,200,0);
+    fill(107, 46, 247);
+    rect(-14,-168,300,200,0); 
+    fill(45, 101, 179);
+    rect(-122,93,266,37,0);
+    fill(245, 17, 48);
+    rect(232,91,266,37,0);
+    fill(17, 245, 150);
+    rect(-55,352,266,37,0);
+    fill(196, 245, 17);    
+    rect(83,166,266,37,0);
+    fill(230, 175, 23);
+    rect(-51,129,266,37,0);
+    fill(17, 245, 40);
+    rect(162,243,280,37,0);
+    fill(176, 35, 237);
+    rect(-49,204,266,37,0);
+    fill(38, 109, 252);
+    rect(270,350,266,37,0);
+    fill(150, 193, 242);
+    textSize(52);
+    text("Game Over!", 37, 81);
+    fill(228, 250, 150);
+    textSize(21);
+    text("Your Time was: " + playerTime/1000, 20,20);
+    textSize(14);
+    fill(252, 235, 3);
+    textSize(28);
+
+
+    
+    
+    
 };
 
 /* Define all the draw function
@@ -441,8 +541,11 @@ var draw = function() {
     }
     else if (currentScene === 1){
         playGame();
+        timerStart();
     }
     else if (currentScene === 2) {
+        timerStop();
+        endScreen();
     }
 };    
 
