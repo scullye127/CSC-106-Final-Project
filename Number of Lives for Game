@@ -1,7 +1,6 @@
 //Bitmojis =================================================================================
 //Ethan's Bitmoji
 var drawTorso = function(torsoX,torsoY,torsoHeight) {
-    
     //shirt
     noStroke();
     fill(110, 110, 110);
@@ -182,6 +181,8 @@ var currentScene = 0;
 var score = 0;
 var stillPlaying = true;
 var numLives = 3;
+var playerTime = 0;
+var startTime = 0;
 ///////Copy in the Khan Button Class///////
 
 //Start Button =============================================================================
@@ -215,7 +216,6 @@ Button.prototype.handleMouseClick = function() {
         this.onClick();
     }
 };
-
 //Creates a button
 var startButton = new Button ({
     x: 153,
@@ -223,7 +223,8 @@ var startButton = new Button ({
     label: "Start!",
     onClick: function() {
      currentScene = 1;
-      playSound(getSound("retro/coin"));
+      playSound(getSound("rpg/battle-swing"));
+      startTime = millis();
     }
 });
 
@@ -395,12 +396,10 @@ ball = new Ball(new PVector(width/2, height/2));
 var paddleX = (175);
 var paddleSpeed = 3;
 var bricksBroken = 0;
-
 var paddle = function() { //Paddle
     //Constrain the player movement
     fill(255, 255, 255);
     rect(paddleX, 328, 116, 11);
-
 };
 
 //Move the paddle left / right adapted from khan pong
@@ -411,23 +410,6 @@ var movePaddleLeft = function() {
 //Move the player down
 var movePaddleRight = function() {
     paddleX += paddleSpeed;
-};
-
-var startTime;
-var playerTime;
-
-var timerStart = function() {
-  {
-   startTime = millis;   
-  }
-    
-};
-
-var timerStop = function() {
- {
-  playerTime = millis-startTime;   
- }
-    
 };
 var checkWin = function() {
     if(bricksBroken === 28) {
@@ -443,6 +425,7 @@ var checkLost = function() {
 };
 //GAME CODE HERE
 var playGame = function(){
+    playerTime = round((millis() - startTime))/1000;
     checkWin();
     checkLost();
     fill(122, 115, 115);
@@ -519,7 +502,7 @@ var endScreen = function() {
     text("Game Over!", 52, 39);
     fill(12, 35, 237);
     textSize(21);
-    text("Your Time was: " + playerTime/1000, 89,179);
+    text("Your Time was: " + playerTime, 89,179);
      fill(55, 255, 10);
     textSize(21);
     text("Final Score: " + score, 15,103);
