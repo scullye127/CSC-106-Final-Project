@@ -320,7 +320,7 @@ for (var i = 0; i < NUM_COLS; i++) {
 var t = 0;
 var time = 60;
 var ball;
-var ballSpeed = 3.5;
+var ballSpeed = 3;
 var ballX;
 var ballY;
 //==========================================================================================
@@ -387,7 +387,7 @@ var Ball = function(position, speed) { //Ball Properties with Position, Speed an
 ball = new Ball(new PVector(width/2, height/2));
 
 var paddleX = (175);
-var paddleSpeed = 2;
+var paddleSpeed = 3;
 var bricksBroken = 0;
 
 var paddle = function() { //Paddle
@@ -423,11 +423,24 @@ var timerStop = function() {
  }
     
 };
-
+var checkWin = function() {
+    if(bricksBroken === 28) {
+        currentScene = 2;  
+    }
+    else {return;}    
+     
+};
+var checkLost = function() {
+    if (numLives === 0) {
+        currentScene = 2;
+    }
+};
 //GAME CODE HERE
 var playGame = function(){
-    stillPlaying = true;
+    checkWin();
+    checkLost();
     fill(122, 115, 115);
+    rect(mouseX,310,122,13); //Moveable Bumper
     ellipse(100,100,24,24);
         //Draw the environment
     background(47, 44, 89);
@@ -459,6 +472,7 @@ var playGame = function(){
                 ball.bottomCollision(); 
                 bricks[i].isBroken = true;
                 bricksBroken ++;
+                score ++;
             }
         }
     }
@@ -495,24 +509,16 @@ var endScreen = function() {
     rect(270,350,266,37,0);
     fill(150, 193, 242);
     textSize(52);
-    text("Game Over!", 37, 81);
-    fill(228, 250, 150);
+    text("Game Over!", 52, 39);
+    fill(12, 35, 237);
     textSize(21);
-    text("Your Time was: " + playerTime/1000, 20,20);
-    textSize(14);
-    fill(252, 235, 3);
-    textSize(28);
-};
-
-//Check if 28 bricks have been destroyed, if so, player wins
-draw = function() {
-
-var checkWin = function() {
-    if(bricksBroken === 1) {
-         currentScene = 2;
-    }
-    else {return;}    
-};
+    text("Your Time was: " + playerTime/1000, 89,179);
+     fill(55, 255, 10);
+    textSize(21);
+    text("Final Score: " + score, 15,103);
+    textSize(22);
+    fill(65, 113, 242);
+    text("Thanks For Playing!", 175,252,209,159);
 };
 /* Define all the draw function
 If the current scene is 0, call the splash screen and if it is 1, then it would go to the next scene, which is the play game scene, then call the game functions and else call the endScreen function*/
