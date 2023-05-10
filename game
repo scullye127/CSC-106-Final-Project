@@ -321,6 +321,7 @@ for (var i = 0; i < NUM_COLS; i++) {
 //Constants
 var ball;
 var stillPlaying= false;
+var numLives = 3;
 var t = 0;
 var time = 60;
 var ballSpeed = 3.5;
@@ -368,8 +369,9 @@ var Ball = function(position, speed) { //Ball Properties with Position, Speed an
             this.velocity.mult(new PVector(1, -1));
         }
         else if (this.position.y > height) {
-            this.position.y = height;
-            this.velocity.mult(new PVector(1, -1));
+            this.position = new PVector(width/2, height/2);
+            this.resetVelocity();
+            --numLives;
         }
         this.position.add(this.velocity);
         ballX = this.position.x;
@@ -394,7 +396,7 @@ var paddleX = (175);
 var paddleSpeed = 2;
 var bricksBroken = 0;
 
-var paddle = function() { //Paddle (work in progress)
+var paddle = function() { //Paddle 
     //Constrain the player movement
     fill(255, 255, 255);
     rect(paddleX, 300, 150, 10);
@@ -549,14 +551,3 @@ var draw = function() {
         endScreen();
     }
 };    
-
-
-/*
-  if (mouseY> 390){continueplay = false;
-To be able to stop when ball hits the ground
-
-*/
-
-
-
-
