@@ -222,7 +222,8 @@ var startButton = new Button ({
     y: 288,
     label: "Start!",
     onClick: function() {
-     currentScene = 1;   
+     currentScene = 1;
+      playSound(getSound("retro/coin"));
     }
 });
 
@@ -358,19 +359,23 @@ var Ball = function(position, speed) { //Ball Properties with Position, Speed an
        if (this.position.x < 0) {
              this.position.x = 0;
             this.velocity.mult(new PVector(-1, 1));
+                playSound(getSound("rpg/hit-thud"));
         }
         else if (this.position.x > width) {
              this.position.x = height;
             this.velocity.mult(new PVector(-1, 1));
+                playSound(getSound("rpg/hit-thud"));
         }
         if (this.position.y < 0) {
             this.position.y = 0;
             this.velocity.mult(new PVector(1, -1));
+                playSound(getSound("rpg/hit-thud"));
         }
         else if (this.position.y > height) {
             this.position = new PVector(width/2, height/2);
             this.resetVelocity();
             --numLives;
+             playSound(getSound("rpg/hit-whack"));
         }
         this.position.add(this.velocity);
         ballX = this.position.x;
@@ -379,6 +384,7 @@ var Ball = function(position, speed) { //Ball Properties with Position, Speed an
     this.bottomCollision = function(){
         {
             this.velocity.mult(new PVector(1, -1));
+                playSound(getSound("rpg/hit-thud"));
         }
     };
 };
@@ -473,6 +479,7 @@ var playGame = function(){
                 bricks[i].isBroken = true;
                 bricksBroken ++;
                 score ++;
+                playSound(getSound("retro/hit2"));
             }
         }
     }
