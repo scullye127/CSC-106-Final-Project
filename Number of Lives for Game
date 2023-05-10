@@ -399,7 +399,7 @@ var bricksBroken = 0;
 var paddle = function() { //Paddle
     //Constrain the player movement
     fill(255, 255, 255);
-    rect(paddleX, 328, 116, 11);
+    rect(paddleX, 328, 150, 11);
 };
 
 //Move the paddle left / right adapted from khan pong
