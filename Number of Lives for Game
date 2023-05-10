@@ -450,7 +450,7 @@ var playGame = function(){
     }
     paddle();
     pauseButton.draw();
-    if ((ballX >= paddleX && ballX <= paddleX+116) && (ballY > 325 && ballY < 328)) {
+    if ((ballX >= paddleX && ballX <= paddleX+150) && (ballY > 325 && ballY < 328)) {
      ball.bottomCollision();   
         
     }
