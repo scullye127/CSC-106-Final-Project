@@ -522,7 +522,7 @@ var endScreen = function() {
     text("Game Over!", 37, 81);
     fill(228, 250, 150);
     textSize(21);
-    text("Your Time was: " + playerTime/1000, 20,20);
+    //text("Your Time was: " + playerTime/1000, 20,20);
     textSize(14);
     fill(252, 235, 3);
     textSize(28);
