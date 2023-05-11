@@ -217,7 +217,7 @@ Button.prototype.handleMouseClick = function() {
     }
 };
 //Creates a button
-var startButton = new Button ({
+var startButton = new Button ({ //Creates a start button
     x: 153,
     y: 288,
     label: "Start!",
@@ -228,7 +228,7 @@ var startButton = new Button ({
     }
 });
 
-var pauseButton = new Button ({
+var pauseButton = new Button ({ //Creates a pause button
     x:310,
     y: 350,
     label: "Pause",
@@ -238,13 +238,13 @@ var pauseButton = new Button ({
 });
  
 
-//Define Mouseclicked built-in function
+//Define Mouseclicked built-in function for the start and pause button
 mouseClicked = function() {
     startButton.handleMouseClick();
     pauseButton.handleMouseClick();
 };
 //Splash Screen Code =======================================================================
-var splashScreen = function(){
+var splashScreen = function(){ 
     var customFont = createFont("fantasy");
     textFont(customFont);
     background(68,0,139);
@@ -288,10 +288,10 @@ var Brick = function(x, y) {
     this.y = y;
     this.w = 54;
     this.h = 20;
-    this.isBroken = false;
+    this.isBroken = false; /*This variable is used in a function so that when the ball collides with a brick, it starts to store the number of broken bricks*/
 };
 
-Brick.prototype.draw = function() {
+Brick.prototype.draw = function() { //Makes or draws the bricks
     fill(255, 0, 0);
     strokeWeight(2);
     if(this.isBroken === false) {
@@ -299,7 +299,7 @@ Brick.prototype.draw = function() {
     }
 };
 
-Brick.prototype.ballCollides = function(x, y) {
+Brick.prototype.ballCollides = function(x, y) { //Collision function for the ball against the brick
   
   return x >= this.x && x <= this.x + this.w &&
          y >= this.y && y <= this.y + this.h;
@@ -322,7 +322,7 @@ for (var i = 0; i < NUM_COLS; i++) {
 var t = 0;
 var time = 60;
 var ball;
-var ballSpeed = 3;
+var ballSpeed = 3; 
 var ballX;
 var ballY;
 //==========================================================================================
@@ -342,25 +342,25 @@ var Ball = function(position, speed) { //Ball Properties with Position, Speed an
         this.speed*cos(this.theta), -this.speed*sin(this.theta));
       
     };
-    this.resetVelocity();
+    this.resetVelocity(); //Resets the velocity and a part of the code that would change the angle/direction of the ball when it bounces off of walls or the paddle
     
-    this.draw = function() {
+    this.draw = function() { //Draws the ball
         fill(255, 255, 255);
         noStroke();
         ellipse(this.position.x, this.position.y,
         this.radius*1.5, this.radius*1.5);
     };
     
-    this.velocityBall = function(x, y) {
+    this.velocityBall = function(x, y) { 
                 this.velocity.mult(new PVector(-1, 1));
-            };
+            }; //This is the velocity of the ball; basically it multiplies the ball's velocity by the PVector wiht parameters of -1,1, basically set directions, but since it multiplies with the velocity, it can change the angle or direction of the ball's movement when it collides with walls or the paddle. It'll always bounce or reflect to the other direction of the said collision object.
 
-    this.update = function() {
+    this.update = function() { //This handles the collisions of the ball against the walls
         //Handle wall collisions
-       if (this.position.x < 0) {
+       if (this.position.x < 0) { //These two position.x are for the left and right walls
              this.position.x = 0;
             this.velocity.mult(new PVector(-1, 1));
-                playSound(getSound("rpg/hit-thud"));
+                playSound(getSound("rpg/hit-thud")); //Plays a sound when it bumps the wall
         }
         else if (this.position.x > width) {
              this.position.x = height;
@@ -370,19 +370,19 @@ var Ball = function(position, speed) { //Ball Properties with Position, Speed an
         if (this.position.y < 0) {
             this.position.y = 0;
             this.velocity.mult(new PVector(1, -1));
-                playSound(getSound("rpg/hit-thud"));
+                playSound(getSound("rpg/hit-thud")); //This handles the collision with the top wall or top collision
         }
         else if (this.position.y > height) {
             this.position = new PVector(width/2, height/2);
             this.resetVelocity();
             --numLives;
-             playSound(getSound("rpg/hit-whack"));
+             playSound(getSound("rpg/hit-whack")); //This basically is like a black hole, it takes the ball and it respawns it back to the middle of the gamespace. Also, it resets the velocity of the ball, which leads to changes of the angle where it would bounce to. This also takes one life, and plays a sound that basically says that you did something wrong and you must not do it again!!!
         }
-        this.position.add(this.velocity);
+        this.position.add(this.velocity); 
         ballX = this.position.x;
         ballY = this.position.y;
     };
-    this.bottomCollision = function(){
+    this.bottomCollision = function(){ //This helps with the collision between the ball and paddle and bricks because it allows to the velocity of the ball to multuply with a different PVector so it can change the angle or direction of the ball
         {
             this.velocity.mult(new PVector(1, -1));
                 playSound(getSound("rpg/hit-thud"));
@@ -428,13 +428,13 @@ var checkLost = function() {
 };
 //GAME CODE HERE
 var playGame = function(){
-    playerTime = round((millis() - startTime))/1000;
-    checkWin();
+    playerTime = round((millis() - startTime))/1000; //Basically keeps track of how long the player either lasted or beat the game (speed runner could try to beat Sub 1 minute due to probably NRG to be honest, you need good luck for this game)
+    checkWin(); //checks win or lose
     checkLost();
     fill(122, 115, 115);
     background(47, 44, 89);
     fill(160, 190, 250);
-    text("Lives: " + numLives, 13, 366, 171,100);
+    text("Lives: " + numLives, 13, 366, 171,100); //number of lives
     //Draw the ball
     ball.draw();
     
@@ -513,6 +513,16 @@ var endScreen = function() {
 /* Define all the draw function
 If the current scene is 0, call the splash screen and if it is 1, then it would go to the next scene, which is the play game scene, then call the game functions and else call the endScreen function*/
 var draw = function() {
+    if (currentScene === 0) {
+        splashScreen();
+    }
+    else if (currentScene === 1){
+        playGame();
+    }
+    else if (currentScene === 2) {
+        endScreen();
+    }
+};    
     if (currentScene === 0) {
         splashScreen();
     }
