@@ -407,10 +407,12 @@ var movePaddleLeft = function() {
     paddleX -= paddleSpeed;
 };
 
-//Move the player down
+
 var movePaddleRight = function() {
     paddleX += paddleSpeed;
 };
+
+//check if 28 bricks have been broken, if so, go to end screen
 var checkWin = function() {
     if(bricksBroken === 28) {
         currentScene = 2;  
@@ -418,6 +420,7 @@ var checkWin = function() {
     else {return;}    
      
 };
+//if player loses lives, go to end screen
 var checkLost = function() {
     if (numLives === 0) {
         currentScene = 2;
@@ -429,33 +432,30 @@ var playGame = function(){
     checkWin();
     checkLost();
     fill(122, 115, 115);
-    rect(mouseX,310,122,13); //Moveable Bumper
-    ellipse(100,100,24,24);
-        //Draw the environment
     background(47, 44, 89);
     fill(160, 190, 250);
     text("Lives: " + numLives, 13, 366, 171,100);
     //Draw the ball
     ball.draw();
     
-    if(keyIsPressed) {
+    if(keyIsPressed) { //if the left key is pressed and the paddle has room to move, call move left function
      if (keyCode === LEFT && paddleX > 0) {
       movePaddleLeft();   
          
-     }
+     } //if the right key is pressed and the paddle has room to move, call move right function
      else if (keyCode === RIGHT && paddleX < 250) {
       movePaddleRight();   
      }
         
     }
     paddle();
-    pauseButton.draw();
+    pauseButton.draw(); //draw pause button
     if ((ballX >= paddleX && ballX <= paddleX+150) && (ballY > 325 && ballY < 328)) {
-     ball.bottomCollision();   
+     ball.bottomCollision();   //if the ball hits the paddle, run collision
         
     }
      
-    for (var i = 0; i <bricks.length; i++) {
+    for (var i = 0; i <bricks.length; i++) { //check every brick for collision, if it happens, run collision, change the brick to broken, and add to the score
      if(bricks[i].ballCollides(ballX,ballY)){
             if(bricks[i].isBroken === false) {
                 ball.bottomCollision(); 
@@ -468,9 +468,9 @@ var playGame = function(){
     }
     
     for (var i = 0; i < bricks.length; i++) {
-    bricks[i].draw();
+    bricks[i].draw(); //draw bricks
         }
-  ball.update();
+  ball.update(); //draw ball
 };
 
 var endScreen = function() {
