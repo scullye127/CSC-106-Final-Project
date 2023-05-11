@@ -281,7 +281,7 @@ var splashScreen = function(){
 };
 
 //Brick Object
-var Brick = function(x, y) {
+var Brick = function(x, y) { //brick constructor
     this.x = x;
     this.y = y;
     this.w = 54;
@@ -289,7 +289,7 @@ var Brick = function(x, y) {
     this.isBroken = false;
 };
 
-Brick.prototype.draw = function() {
+Brick.prototype.draw = function() { //brick draw function
     fill(255, 0, 0);
     strokeWeight(2);
     if(this.isBroken === false) {
@@ -297,7 +297,7 @@ Brick.prototype.draw = function() {
     }
 };
 
-Brick.prototype.ballCollides = function(x, y) {
+Brick.prototype.ballCollides = function(x, y) { //return true if a collision occurs
   
   return x >= this.x && x <= this.x + this.w &&
          y >= this.y && y <= this.y + this.h;
@@ -305,7 +305,7 @@ Brick.prototype.ballCollides = function(x, y) {
     
 };
 
-// Create the array of tiles at appropriate positions
+// Create the array of bricks at appropriate positions
 var bricks = [];
 var NUM_COLS = 7;
 var NUM_ROWS = 4;
@@ -425,14 +425,14 @@ var checkwin = function() {
 var startTime;
 var playerTime;
 
-var timerStart = function() {
+var timerStart = function() { //set the time on the start screen to the current time
   {
    startTime = millis;   
   }
     
 };
 
-var timerStop = function() {
+var timerStop = function() { //set the gameplay time to the current time-time on start screen
  {
   playerTime = millis-startTime;   
  }
@@ -443,20 +443,17 @@ var timerStop = function() {
 
 var playGame = function(){
     checkwin();
-    println(bricksBroken);
     fill(122, 115, 115);
-    rect(mouseX,310,122,13); //Moveable Bumper
-    ellipse(100,100,24,24);
-        //Draw the environment
+    //Draw the environment
     background(47, 44, 89);
     //Draw the ball
     ball.draw();
     
-    if(keyIsPressed) {
+    if(keyIsPressed) { //if the left arrow is pressed and the paddle isn't at the left edge, call the move left function
      if (keyCode === LEFT && paddleX > 0) {
       movePaddleLeft();   
          
-     }
+     }//if the right arrow is pressed and the paddle isn't at the right edge, call the move right function
      else if (keyCode === RIGHT && paddleX < 250) {
       movePaddleRight();   
      }
@@ -466,21 +463,14 @@ var playGame = function(){
     
     paddle();
     pauseButton.draw();
-    if (stillPlaying) {
-        t++;
-        if (t >= time) {
-            t = 0;
-            stillPlaying = true;
-        }
-        return;
-    }
+
     
     if ((ballX >= paddleX && ballX <= paddleX+250) && (ballY > 300 && ballY < 310)) {
      ball.bottomCollision();   
         
     }
      
-    for (var i = 0; i <bricks.length; i++) {
+    for (var i = 0; i <bricks.length; i++) { //loop thru every brick and tell if a collision has occured, if it has, add to the player score, change the brick to be broken, and run the collision
      if(bricks[i].ballCollides(ballX,ballY)){
             if(bricks[i].isBroken === false) {
                 ball.bottomCollision(); 
@@ -491,9 +481,9 @@ var playGame = function(){
     }
     
     for (var i = 0; i < bricks.length; i++) {
-    bricks[i].draw();
+    bricks[i].draw(); //draw bricks
         }
-  ball.update();
+  ball.update(); //update ball position
 };
 
 var endScreen = function() {
